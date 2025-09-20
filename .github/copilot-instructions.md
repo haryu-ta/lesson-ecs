@@ -1,0 +1,21 @@
+- [x] Clarify Project Requirements
+  - React + TypeScript + Vite プロジェクトとして初期化済み。
+- [x] Scaffold the Project
+  - Vite テンプレート（react-ts）でプロジェクトを作成。
+- [x] Customize the Project
+  - README.md を日本語で更新。
+- [x] Install Required Extensions
+  - 必要な拡張機能はありません。
+- [x] Compile the Project
+  - npm install 済み。開発サーバー起動確認済み。
+- [x] Create and Run Task
+  - npm run dev で開発サーバー起動。
+- [x] Launch the Project
+  - http://localhost:5173/ で動作確認済み。
+- [x] Ensure Documentation is Complete
+  - README.md と copilot-instructions.md を作成済み。
+
+## 実行ガイドライン
+- すべてのチェックリスト項目を順に実施済み。
+- コミュニケーションは簡潔に。
+- 開発ベストプラクティスに従う。
