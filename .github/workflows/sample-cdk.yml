@@ -18,9 +18,7 @@ jobs:
               uses: actions/checkout@v4
             - uses: ./.github/actions/setup-node
             - name: "CDK Deploy Exec"
-              run: |
+              run:
                 ls -la
                 npm install
-                npm run build
-                ls -la
-                npx cdk deploy
+                npm run deploy

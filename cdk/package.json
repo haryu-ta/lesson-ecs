@@ -6,15 +6,15 @@
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
     "cdk": "cdk",
-    "deploy": "cdk deploy",
+    "deploy": "cdk deploy --app \"npx ts-node main.ts\"",
     "destroy": "cdk destroy"
   },
   "devDependencies": {
+    "@types/node": "^20.5.0",
     "aws-cdk-lib": "^2.112.0",
     "constructs": "^10.1.121",
-    "typescript": "^5.2.0",
-    "@types/node": "^20.5.0"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.0"
   }
 }
