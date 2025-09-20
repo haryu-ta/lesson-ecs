@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc",
     "cdk": "cdk",
-    "deploy": "cdk deploy --app \"npx ts-node main.ts\"",
-    "destroy": "cdk destroy"
+    "deploy": "npx cdk deploy --app \"npx ts-node main.ts\"",
+    "destroy": "npx cdk destroy"
   },
   "devDependencies": {
     "@types/node": "^20.5.0",
