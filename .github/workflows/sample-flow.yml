@@ -70,16 +70,31 @@ jobs:
                 ls -la
         needs: introduction
     
+    # dockerimage:
+    #     runs-on: ubuntu-latest 
+    #     steps:
+    #         - name: "checkout"
+    #           uses: actions/checkout@v4
+    #         - name: "docker login"
+    #           uses: docker/login-action@v3
+    #           with:
+    #             username: ${{ secrets.DOCKER_USERNAME }}
+    #             password: ${{ secrets.DOCKER_PASSWORD }}
+    #         - name: "docker build"
+    #           run: |
+    #             docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} .
+    #         - name: "docker push"
+    #           run: |
+    #             docker tag ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+    #             docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+    #     needs: 
+    #         [test, build]
+
     dockerimage:
         runs-on: ubuntu-latest 
         steps:
             - name: "checkout"
               uses: actions/checkout@v4
-            # - name: "docker login"
-            #   uses: docker/login-action@v3
-            #   with:
-            #     username: ${{ secrets.DOCKER_USERNAME }}
-            #     password: ${{ secrets.DOCKER_PASSWORD }}
             - name: "ecr login"
               uses: docker/login-action@v3
               with:
@@ -91,8 +106,8 @@ jobs:
                 docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} .
             - name: "docker push"
               run: |
-                docker tag ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/my-app:latest
-                docker push ${{ secrets.DOCKER_USERNAME }}/my-app:latest
+                docker tag ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
+                docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
         needs: 
             [test, build]
     
