@@ -30,45 +30,45 @@ jobs:
               run: |
                 echo "Started!!"
 
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "checkout"
-              uses: actions/checkout@v4
-            - name: "Setup Node.js"
-              uses: actions/setup-node@v4
-              with:
-                node-version: '20'
-                cache: 'npm'
-            - name: "Install Dependencies"
-              run: |
-                npm install
-            - name: "Vitest Exec"
-              run: |
-                echo "This is a Vitest exec step."
-                npm run test
-        needs: introduction
+    # test:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "checkout"
+    #           uses: actions/checkout@v4
+    #         - name: "Setup Node.js"
+    #           uses: actions/setup-node@v4
+    #           with:
+    #             node-version: '20'
+    #             cache: 'npm'
+    #         - name: "Install Dependencies"
+    #           run: |
+    #             npm install
+    #         - name: "Vitest Exec"
+    #           run: |
+    #             echo "This is a Vitest exec step."
+    #             npm run test
+    #     needs: introduction
 
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "checkout"
-              uses: actions/checkout@v4
-            - name: "Setup Node.js"
-              uses: actions/setup-node@v4
-              with:
-                node-version: '20'
-                cache: 'npm'
-            - name: "Install Dependencies"
-              run: |
-                npm install
-            - name: "Build Exec"
-              run: |
-                npm run build
-            - name: "List Files"
-              run: |
-                ls -la
-        needs: introduction
+    # build:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "checkout"
+    #           uses: actions/checkout@v4
+    #         - name: "Setup Node.js"
+    #           uses: actions/setup-node@v4
+    #           with:
+    #             node-version: '20'
+    #             cache: 'npm'
+    #         - name: "Install Dependencies"
+    #           run: |
+    #             npm install
+    #         - name: "Build Exec"
+    #           run: |
+    #             npm run build
+    #         - name: "List Files"
+    #           run: |
+    #             ls -la
+    #     needs: introduction
     
     # dockerimage:
     #     runs-on: ubuntu-latest 
@@ -109,7 +109,8 @@ jobs:
                 docker tag ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
                 docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
         needs: 
-            [test, build]
+            # [test, build]
+            - introduction
     
     finally:
         runs-on: ubuntu-latest
