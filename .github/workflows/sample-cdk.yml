@@ -16,12 +16,11 @@ jobs:
         steps:
             - name: "checkout"
               uses: actions/checkout@v4
-              with:
-                path: ./cdk
-            # - uses: ./.github/actions/setup-node
+            - uses: ./.github/actions/setup-node
             - name: "CDK Deploy Exec"
               run: |
+                cd cdk
                 ls -la
-                # npm install
-                # npm run build
-                # npx cdk deploy
+                npm install
+                npm run build
+                npx cdk deploy
