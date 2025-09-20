@@ -22,3 +22,7 @@ jobs:
                 ls -la
                 npm install
                 npm run deploy
+              env:
+                AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: ap-northeast-1

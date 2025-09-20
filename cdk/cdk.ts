@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as iam from 'aws-cdk-lib/aws-iam';
 
 export class FargateSimpleStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -38,6 +39,10 @@ export class FargateSimpleStack extends cdk.Stack {
       memoryLimitMiB: 512,
       cpu: 256,
     });
+  
+    taskDefinition.taskRole.addManagedPolicy(
+      iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonEC2ContainerRegistryReadOnly")
+    );
 
     // 5. コンテナをタスクに追加
     const container = taskDefinition.addContainer('MyContainer', {
