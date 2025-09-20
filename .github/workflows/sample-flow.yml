@@ -19,9 +19,17 @@ jobs:
               run: |
                 echo "Hello, World!"
                 echo ${GIT_NAME}
-                ls -la
+                ll
               env:
                 GIT_NAME: ${{ github.actor }}
+        continue-on-error: true    # introductionが失敗しても次のjobを実行する
+
+    setup:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "started"
+              run: |
+                echo "Started!!"
 
     test:
         runs-on: ubuntu-latest
@@ -65,6 +73,8 @@ jobs:
     
     finally:
         runs-on: ubuntu-latest
+        # 直前のjobの成功・失敗に関わらず実行する
+        if: always()   
         steps:
             - name: "Final Step"
               run: |
