@@ -7,8 +7,13 @@ on:
         paths:
             - .github/workflows/**
 
+defaults:
+    run:
+        shell: bash
+        working-directory: .
+
 jobs:
-    hello-world:
+    introduction:
         runs-on: ubuntu-latest
         steps:
             - name: "Hello World"
@@ -18,5 +23,20 @@ jobs:
                 ls -la
               env:
                 GIT_NAME: ${{ github.actor }}
-              shell: bash
-              working-directory: .
+
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Vitest Exec"
+              run: |
+                echo "This is a Vitest exec step."
+                npm run test
+
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Build Exec"
+              run: |
+                echo "This is a Build exec step."
+                npm run build
+                ls -la
