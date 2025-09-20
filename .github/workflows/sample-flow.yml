@@ -19,10 +19,9 @@ jobs:
               run: |
                 echo "Hello, World!"
                 echo ${GIT_NAME}
-                ll
               env:
                 GIT_NAME: ${{ github.actor }}
-        continue-on-error: true    # introductionが失敗しても次のjobを実行する
+        #continue-on-error: true    # introductionが失敗しても次のjobを実行する
 
     setup:
         runs-on: ubuntu-latest
