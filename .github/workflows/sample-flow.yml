@@ -1,0 +1,22 @@
+name: "lesson-ecs-workflow"
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - .github/workflows/**
+
+jobs:
+    hello-world:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Hello World"
+              run: |
+                echo "Hello, World!"
+                echo ${GIT_NAME}
+                ls -la
+              env:
+                GIT_NAME: ${{ github.actor }}
+              shell: bash
+              working-directory: .
