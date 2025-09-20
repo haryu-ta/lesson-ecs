@@ -80,6 +80,7 @@ jobs:
                 password: ${{ secrets.DOCKER_PASSWORD }}
             - name: "docker build"
               run: |
+                echo ${{ secrets.DOCKER_USERNAME }}
                 docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} .
             - name: "docker push"
               run: |
