@@ -3,8 +3,6 @@ description: Install tools and set up environment
 runs:
   using: composite
   steps:
-    - name: "checkout"
-      uses: actions/checkout@v4
     - name: "Setup Node.js"
       uses: actions/setup-node@v4
       with:
