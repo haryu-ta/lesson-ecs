@@ -32,32 +32,32 @@ jobs:
                 echo "Started!!"
 
     # テストの実行
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "checkout"
-              uses: actions/checkout@v4
-            - uses: ./.github/actions/setup-node
-            - name: "Vitest Exec"
-              run: |
-                echo "This is a Vitest exec step."
-                npm run test
-        needs: introduction
+    # test:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "checkout"
+    #           uses: actions/checkout@v4
+    #         - uses: ./.github/actions/setup-node
+    #         - name: "Vitest Exec"
+    #           run: |
+    #             echo "This is a Vitest exec step."
+    #             npm run test
+    #     needs: introduction
 
     # ビルドの実行
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "checkout"
-              uses: actions/checkout@v4
-            - uses: ./.github/actions/setup-node
-            - name: "Build Exec"
-              run: |
-                npm run build
-            - name: "List Files"
-              run: |
-                ls -la
-        needs: introduction
+    # build:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "checkout"
+    #           uses: actions/checkout@v4
+    #         - uses: ./.github/actions/setup-node
+    #         - name: "Build Exec"
+    #           run: |
+    #             npm run build
+    #         - name: "List Files"
+    #           run: |
+    #             ls -la
+    #     needs: introduction
     
     # ECRにプッシュする場合
     # dockerimage:
@@ -81,31 +81,31 @@ jobs:
     #         [test, build]
 
     # ECRにプッシュする場合
-    # dockerimage:
-    #     runs-on: ubuntu-latest 
-    #     steps:
-    #         - name: "checkout"
-    #           uses: actions/checkout@v4
-    #         - name: "configure aws credentials"
-    #           uses: aws-actions/configure-aws-credentials@v4
-    #           with:
-    #             aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
-    #             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #             aws-region: ap-northeast-1
-    #         - name: "ecr login"
-    #           uses: docker/login-action@v3
-    #           with:
-    #             registry: ${{ secrets.AWS_ECR_REPOSITORY }}
-    #         - name: "docker build"
-    #           run: |
-    #             docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} .
-    #         - name: "docker push"
-    #           run: |
-    #             docker tag ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
-    #             docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
-    #     needs: 
-    #         # [test, build]
-    #         - introduction
+    dockerimage:
+        runs-on: ubuntu-latest 
+        steps:
+            - name: "checkout"
+              uses: actions/checkout@v4
+            - name: "configure aws credentials"
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ap-northeast-1
+            - name: "ecr login"
+              uses: docker/login-action@v3
+              with:
+                registry: ${{ secrets.AWS_ECR_REPOSITORY }}
+            - name: "docker build"
+              run: |
+                docker build -t ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} .
+            - name: "docker push"
+              run: |
+                docker tag ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
+                docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.DOCKER_USERNAME }}/my-app:latest
+        needs: 
+            # [test, build]
+            - introduction
     
     finally:
         runs-on: ubuntu-latest
@@ -116,6 +116,6 @@ jobs:
               run: |
                 echo "This is the final step."
         needs: 
-            [test, build]
+            - dockerimage
 
 

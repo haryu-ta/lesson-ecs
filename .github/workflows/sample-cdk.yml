@@ -1,0 +1,27 @@
+name: "lesson-ecs-cdk-workflow"
+
+on:
+    push:
+        branches:
+            - cdk
+
+defaults:
+    run:
+        shell: bash
+        working-directory: ./cdk
+
+jobs:
+    dockerimage:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "checkout"
+              uses: actions/checkout@v4
+              with:
+                path: ./cdk
+            - uses: ./.github/actions/setup-node
+            - name: "CDK Deploy Exec"
+              run: |
+                ls -l
+                npm install
+                npm run build
+                npx cdk deploy
