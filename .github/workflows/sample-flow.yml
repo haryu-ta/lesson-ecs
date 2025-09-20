@@ -35,8 +35,9 @@ jobs:
                 cache: 'npm'
             - name: "Install Dependencies"
               run: |
-                npm intall
+                npm install
             - name: "Vitest Exec"
               run: |
                 echo "This is a Vitest exec step."
                 npm run test
+        needs: introduction
