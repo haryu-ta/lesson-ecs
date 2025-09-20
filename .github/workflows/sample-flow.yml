@@ -41,3 +41,35 @@ jobs:
                 echo "This is a Vitest exec step."
                 npm run test
         needs: introduction
+
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "checkout"
+              uses: actions/checkout@v4
+            - name: "Setup Node.js"
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+                cache: 'npm'
+            - name: "Install Dependencies"
+              run: |
+                npm install
+            - name: "Build Exec"
+              run: |
+                npm run build
+            - name: "List Files"
+              run: |
+                ls -la
+        needs: introduction
+    
+    finally:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Final Step"
+              run: |
+                echo "This is the final step."
+        needs: 
+            [test, build]
+
+
