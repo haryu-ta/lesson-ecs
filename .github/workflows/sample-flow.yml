@@ -24,12 +24,12 @@ jobs:
                 GIT_NAME: ${{ github.actor }}
         #continue-on-error: true    # introductionが失敗しても次のjobを実行する
 
-    setup:
-        runs-on: ubuntu-latest
-        steps:
-            - name: "started"
-              run: |
-                echo "Started!!"
+    # setup:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: "started"
+    #           run: |
+    #             echo "Started!!"
 
     # テストの実行
     # test:
@@ -106,6 +106,21 @@ jobs:
         needs: 
             # [test, build]
             - introduction
+
+    ecsdeploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "configure aws credentials"
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ap-northeast-1
+            - name: "ECS Service Update"
+              run: |
+                aws ecs update-service --cluster MyFargateCluster --service MyFargateService --force-new-deployment
+        needs: 
+            - dockerimage
     
     finally:
         runs-on: ubuntu-latest

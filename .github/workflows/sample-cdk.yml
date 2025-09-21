@@ -16,12 +16,13 @@ jobs:
         steps:
             - name: "checkout"
               uses: actions/checkout@v4
-              with:
-                path: ./cdk
             - uses: ./.github/actions/setup-node
             - name: "CDK Deploy Exec"
               run: |
-                ls -l
+                ls -la
                 npm install
-                npm run build
-                npx cdk deploy
+                npm run deploy
+              env:
+                AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+                AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                AWS_REGION: ap-northeast-1
