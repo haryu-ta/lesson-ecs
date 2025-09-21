@@ -32,7 +32,7 @@ export class FargateSimpleStack extends cdk.Stack {
       description: 'Allow HTTP traffic to Fargate tasks',
       securityGroupName: 'FargatePublicSG',
     });
-    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80), 'Allow HTTP from anywhere');
+    sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(8080), 'Allow HTTP from anywhere');
 
     // 実行ロールを作成
     const executionRole = new iam.Role(this, 'EcsExecutionRole', {
