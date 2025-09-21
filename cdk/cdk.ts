@@ -75,6 +75,7 @@ export class FargateSimpleStack extends cdk.Stack {
       assignPublicIp: true,
       desiredCount: 1,
       securityGroups: [sg], // 作成したセキュリティグループを適用
+      serviceName: 'MyFargateService',
     });
   }
 }
