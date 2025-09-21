@@ -22,7 +22,7 @@ const App = () => {
     <>
       <h1>Vite + React</h1>
       <div className="card">
-        Response from REST API is {display ? display : "..."}
+        Response from REST API2 is {display ? display : "..."}
       </div>
     </>
   )

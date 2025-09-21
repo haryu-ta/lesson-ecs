@@ -131,6 +131,6 @@ jobs:
               run: |
                 echo "This is the final step."
         needs: 
-            - dockerimage
+            - ecsdeploy
 
 
