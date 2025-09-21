@@ -34,10 +34,22 @@ export class FargateSimpleStack extends cdk.Stack {
     });
     sg.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80), 'Allow HTTP from anywhere');
 
+    // 実行ロールを作成
+    const executionRole = new iam.Role(this, 'EcsExecutionRole', {
+      assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
+    });
+
+    // ECR からイメージをpullするためのポリシーを付与
+    executionRole.addManagedPolicy(
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonECSTaskExecutionRolePolicy')
+    );
+
+
     // 4. Fargateタスク定義を作成
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'MyTaskDef', {
       memoryLimitMiB: 512,
       cpu: 256,
+      executionRole: executionRole,
     });
   
     taskDefinition.taskRole.addManagedPolicy(
