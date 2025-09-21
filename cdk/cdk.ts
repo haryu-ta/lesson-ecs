@@ -41,7 +41,11 @@ export class FargateSimpleStack extends cdk.Stack {
 
     // ECR からイメージをpullするためのポリシーを付与
     executionRole.addManagedPolicy(
-      iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonECSTaskExecutionRolePolicy')
+      iam.ManagedPolicy.fromManagedPolicyArn(
+        this,
+        'EcsTaskExecutionRolePolicy',
+        'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+      )
     );
 
 
