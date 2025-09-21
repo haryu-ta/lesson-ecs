@@ -65,7 +65,7 @@ export class FargateSimpleStack extends cdk.Stack {
       image: ecs.ContainerImage.fromRegistry('906317261898.dkr.ecr.ap-northeast-1.amazonaws.com/sunandmoon91674/my-app:latest'),
     });
     container.addPortMappings({
-      containerPort: 80,
+      containerPort: 8080,
     });
 
     // 6. Fargateサービスを作成（ALBなし、パブリックIP割り当て）
